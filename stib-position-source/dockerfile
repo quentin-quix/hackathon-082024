@@ -8,9 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Set the working directory inside the container
 WORKDIR /app
 
-RUN echo "hello world"
-
-RUN apt-get update && apt-get install git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install git && rm -rf /var/lib/apt/lists/*
 
 # Copy only the requirements file(s) to leverage Docker cache
 # Assuming all requirements files are in the root or subdirectories

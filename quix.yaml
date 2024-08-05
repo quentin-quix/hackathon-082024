@@ -8,4 +8,7 @@ metadata:
 deployments: []
 
 # This section describes the Topics of the data pipeline
-topics: []
+topics:
+  - name: vehicule-position
+    configuration:
+      partitions: 1

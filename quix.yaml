@@ -15,10 +15,14 @@ deployments:
       memory: 500
       replicas: 1
     variables:
-      - name: output
+      - name: source-output
         inputType: OutputTopic
         required: false
-        value: vehicule-position
+        value: vehicule-position-source
+      - name: transform-output
+        inputType: OutputTopic
+        required: false
+        value: vehicule-position-transform
   - name: stib-waittime-source
     application: stib-waittime-source
     version: latest
@@ -28,16 +32,26 @@ deployments:
       memory: 800
       replicas: 1
     variables:
-      - name: output
+      - name: source-output
         inputType: OutputTopic
         required: false
-        value: waittime
+        value: waittime-source
+      - name: transform-output
+        inputType: OutputTopic
+        required: false
+        value: waittime-transform
 
 # This section describes the Topics of the data pipeline
 topics:
-  - name: vehicule-position
+  - name: vehicule-position-source
     configuration:
       partitions: 1
-  - name: waittime
+  - name: vehicule-position-transform
+    configuration:
+      partitions: 1
+  - name: waittime-source
+    configuration:
+      partitions: 1
+  - name: waittime-transform
     configuration:
       partitions: 1

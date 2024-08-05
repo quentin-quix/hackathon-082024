@@ -1,0 +1,59 @@
+import random
+import os
+import json
+import requests
+
+from quixstreams import Application
+from quixstreams.sources import BaseSource
+from quixstreams.models.messages import KafkaMessage
+
+# for local dev, load env vars from a .env file
+from dotenv import load_dotenv
+load_dotenv()
+
+
+
+class StibSource(BaseSource):
+    def get_vehicle_positions(self):
+        response = requests.get("https://stibmivb.opendatasoft.com/api/explore/v2.1/catalog/datasets/vehicle-position-rt-production/records?limit=100")
+        try:
+            response.raise_for_status()
+        except Exception:
+            print(response.headers)
+            raise
+
+        data = response.json()
+        return data["results"]
+
+    def __iter__(self):
+        while True:
+            for line in self.get_vehicle_positions():
+                for vehicle in json.loads(line["vehiclepositions"]):
+                    vehicle["line"] = line["lineid"]
+                    yield self.serialize(line["lineid"], vehicle)
+
+            self.sleep(5 * 60)
+
+
+def main():
+    app = Application(
+        consumer_group="stib-source-" + str(random.randint(1, 10000)),
+        auto_create_topics=True,
+        loglevel="DEBUG",
+        auto_offset_reset="earliest"
+    )
+    
+    topic= app.topic(os.environ["output"])
+    sdf = app.dataframe(source=StibSource(), topic=topic)
+    # sdf = app.dataframe(topic=topic)
+    # sdf = sdf.filter(lambda value: value["line"] == "29")
+    sdf.print()
+
+    app.run(sdf)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exiting.")

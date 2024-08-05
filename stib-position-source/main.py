@@ -13,8 +13,8 @@ load_dotenv()
 
 
 
-class StibSource(BaseSource):
-    def get_vehicle_positions(self):
+class StibVehiculePositionSource(BaseSource):
+    def get_vehicule_positions(self):
         response = requests.get("https://stibmivb.opendatasoft.com/api/explore/v2.1/catalog/datasets/vehicle-position-rt-production/records?limit=100")
         try:
             response.raise_for_status()
@@ -27,24 +27,23 @@ class StibSource(BaseSource):
 
     def __iter__(self):
         while True:
-            for line in self.get_vehicle_positions():
+            for line in self.get_vehicule_positions():
                 for vehicle in json.loads(line["vehiclepositions"]):
                     vehicle["line"] = line["lineid"]
                     yield self.serialize(line["lineid"], vehicle)
 
             self.sleep(5 * 60)
-
-
+        
 def main():
     app = Application(
-        consumer_group="stib-source-" + str(random.randint(1, 10000)),
+        consumer_group="stib-vehicule-position-source",
         auto_create_topics=True,
         loglevel="DEBUG",
         auto_offset_reset="earliest"
     )
     
     topic= app.topic(os.environ["output"])
-    sdf = app.dataframe(source=StibSource(), topic=topic)
+    sdf = app.dataframe(source=StibVehiculePositionSource(), topic=topic)
     # sdf = app.dataframe(topic=topic)
     # sdf = sdf.filter(lambda value: value["line"] == "29")
     sdf.print()

@@ -17,12 +17,27 @@ deployments:
     variables:
       - name: output
         inputType: OutputTopic
-        description: Name of the output topic to write into
-        required: true
+        required: false
         value: vehicule-position
+  - name: stib-waittime-source
+    application: stib-waittime-source
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 800
+      replicas: 1
+    variables:
+      - name: output
+        inputType: OutputTopic
+        required: false
+        value: waittime
 
 # This section describes the Topics of the data pipeline
 topics:
   - name: vehicule-position
+    configuration:
+      partitions: 1
+  - name: waittime
     configuration:
       partitions: 1

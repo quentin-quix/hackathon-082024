@@ -73,8 +73,8 @@ def main():
         auto_offset_reset="earliest"
     )
     
-    source_topic = app.topic(os.environ["source-output"])
-    transform_topic = app.topic(os.environ["transform-output"])
+    source_topic = app.topic(os.environ["source_output"])
+    transform_topic = app.topic(os.environ["transform_output"])
     
     sdf = app.dataframe(source=StibVehiculePositionSource(), topic=source_topic)
     # sdf = app.dataframe(topic=topic)

@@ -15,11 +15,11 @@ deployments:
       memory: 500
       replicas: 1
     variables:
-      - name: source-output
+      - name: source_output
         inputType: OutputTopic
         required: false
         value: vehicule-position-source
-      - name: transform-output
+      - name: transform_output
         inputType: OutputTopic
         required: false
         value: vehicule-position-transform
@@ -32,11 +32,11 @@ deployments:
       memory: 800
       replicas: 1
     variables:
-      - name: source-output
+      - name: source_output
         inputType: OutputTopic
         required: false
         value: waittime-source
-      - name: transform-output
+      - name: transform_output
         inputType: OutputTopic
         required: false
         value: waittime-transform

@@ -1,9 +1,9 @@
 import requests
 import json
 
-from quixstreams.sources import IterableSource
+from quixstreams.sources import IterableBaseSource
 
-class StibVehiculePositionSource(IterableSource):
+class StibVehiculePositionSource(IterableBaseSource):
     def get_vehicule_positions(self):
         response = requests.get("https://stibmivb.opendatasoft.com/api/explore/v2.1/catalog/datasets/vehicle-position-rt-production/records?limit=100")
         try:
@@ -44,7 +44,7 @@ class StibStopsDetailsSource:
                 "name": name["fr"]
             }
 
-class StibWaitTimeSource(IterableSource):
+class StibWaitTimeSource(IterableBaseSource):
     def get_waittime(self):
         response = requests.get("https://stibmivb.opendatasoft.com/api/explore/v2.1/catalog/datasets/waiting-time-rt-production/exports/json?lang=en&timezone=Europe%2FBerlin")
         try:

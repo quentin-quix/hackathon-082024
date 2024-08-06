@@ -15,10 +15,18 @@ deployments:
       memory: 500
       replicas: 1
     variables:
-      - name: output
+      - name: QUIX_APP
+        inputType: FreeText
+        required: false
+        value: position
+      - name: source_output
         inputType: OutputTopic
         required: false
-        value: vehicule-position
+        value: vehicule-position-source
+      - name: transform_output
+        inputType: OutputTopic
+        required: false
+        value: vehicule-position-transform
   - name: stib-waittime-source
     application: hackathon
     version: latest

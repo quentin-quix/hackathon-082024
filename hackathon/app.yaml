@@ -1,10 +1,5 @@
 name: hackathon
 language: Python
-variables:
-  - name: output
-    inputType: OutputTopic
-    defaultValue: vehicule-position
-    required: false
 dockerfile: dockerfile
 runEntryPoint: main.py
 defaultFile: main.py

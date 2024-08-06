@@ -1,9 +1,9 @@
-name: stib-waittime-source
+name: hackathon
 language: Python
 variables:
   - name: output
     inputType: OutputTopic
-    defaultValue: waittime
+    defaultValue: vehicule-position
     required: false
 dockerfile: dockerfile
 runEntryPoint: main.py

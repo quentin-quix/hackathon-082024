@@ -1,3 +1,0 @@
--e git+https://github.com/quixio/quix-streams.git@quent/sources#egg=quixstreams
-python-dotenv
-requests

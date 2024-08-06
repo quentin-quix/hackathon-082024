@@ -24,7 +24,7 @@ class StibVehiculePositionSource(IterableSource):
 
             self.sleep(5 * 60)
 
-class StibStopsDetailsSource(BaseSource):
+class StibStopsDetailsSource:
 
     def __init__(self):
         self.details = {}

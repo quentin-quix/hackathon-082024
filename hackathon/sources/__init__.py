@@ -1,10 +1,9 @@
 import requests
 import json
 
-from quixstreams.sources import BaseSource
-from quixstreams.models.messages import KafkaMessage
+from quixstreams.sources import IterableSource
 
-class StibVehiculePositionSource(BaseSource):
+class StibVehiculePositionSource(IterableSource):
     def get_vehicule_positions(self):
         response = requests.get("https://stibmivb.opendatasoft.com/api/explore/v2.1/catalog/datasets/vehicle-position-rt-production/records?limit=100")
         try:
@@ -45,7 +44,7 @@ class StibStopsDetailsSource(BaseSource):
                 "name": name["fr"]
             }
 
-class StibWaitTimeSource(BaseSource):
+class StibWaitTimeSource(IterableSource):
     def get_waittime(self):
         response = requests.get("https://stibmivb.opendatasoft.com/api/explore/v2.1/catalog/datasets/waiting-time-rt-production/exports/json?lang=en&timezone=Europe%2FBerlin")
         try:
